@@ -14,13 +14,12 @@ $ProgressPreference = 'SilentlyContinue'
 # make folder to store bumps on desktop if it doesnt exist
 if(!(Test-Path -Path $bumpFolder))
 {
-    Write-Host "--------------------------------------------------------------------------------"
-    Write-Host -nonewline "Making folder on desktop to store bumps...please wait..."
+    Write-Host -nonewline "Making folder on desktop to store bumps...please wait..." -ForegroundColor Cyan
     New-Item -ItemType Directory -Path "$bumpFolder" | Out-Null
-    Write-Host "DONE"
+    Write-Host "DONE" -ForegroundColor Green
 }
  # open the folder to show where bumps are being downloaded
- Start-Process $downloadFolder
+ Start-Process $bumpFolder
 
 for ($num = 1 ; $num -le $totalVids ; $num++)
 {
@@ -41,7 +40,6 @@ for ($num = 1 ; $num -le $totalVids ; $num++)
     try{Invoke-WebRequest -Uri "$($downloadUrl)/$($num)" -OutFile "$($bumpFolder)\$($cleanTitle).mp4"}
     catch{Write-Host "FAILED" -ForegroundColor Red; $errorFlag = $true}
     if(!$errorFlag){write-Host "DONE" -ForegroundColor Green}
-
-    Write-Host "Finished downloading bumps" -ForegroundColor Yellow
 }
+Write-Host "Finished downloading bumps" -ForegroundColor Yellow
 
